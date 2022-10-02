@@ -27,8 +27,11 @@ fs.readFile(path_join(_dirname,'./db/db.json' ), "utf8", (error, notes) => {
 app.post('./api/notes', (req, res) => {
   const notes = JSON.parse(fs.readFile('./db/db.json'));
   const uniqueId = uuidv4();
-  const newNotes = req.body;
-  newNoteId = uniqueId;
+
+  const newNotes = { id: uniqueId,
+    noteTitle: req.body.noteTitle,
+    noteText: req.body.noteText };
+ 
   notes.push(newNotes);
   fs.writeFileSync('./db/db.json', JSON.stringify(notes), (err) => {
    if (err) {
@@ -40,7 +43,7 @@ app.post('./api/notes', (req, res) => {
 });
 
 // GET Route for homepage
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'))
 });
 
@@ -48,11 +51,6 @@ app.get('/', (req, res) => {
 app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/notes.html'))
 });
-
-// Wildcard route to direct users to home page
-//app.get('*', (req, res) => {
-//  res.sendFile(path.join(__dirname, 'public/index.html'))
-//});
 
 app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT} 🚀`)
