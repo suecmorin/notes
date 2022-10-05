@@ -13,4 +13,8 @@ User opens URL in browser.
 LICENSE
 None
 
+SCREENSHOT
 
+Screenshot of deployed application is displayed as an issue in this repo.
+
+notes.heroku.jpg
